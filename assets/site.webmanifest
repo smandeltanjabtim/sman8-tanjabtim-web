@@ -1,0 +1,21 @@
+{
+    "name": "SMAN 8 Tanjung Jabung Timur",
+    "short_name": "SMAN 8 Tanjabtim",
+    "description": "Sekolah Menengah Atas Negeri terbaik di Tanjung Jabung Timur",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2563eb",
+    "icons": [
+        {
+            "src": "assets/favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        }
+    ]
+}

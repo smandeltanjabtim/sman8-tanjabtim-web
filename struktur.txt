@@ -1,0 +1,43 @@
+Struktur File / Folder (Sman8 Tanjung Jabung Timur)
+====================================================
+
+.
+├─ assets/
+│  ├─ android-chrome-192x192.png
+│  ├─ android-chrome-512x512.png
+│  ├─ apple-touch-icon.png
+│  ├─ favicon_io.zip
+│  ├─ favicon-16x16.png
+│  ├─ favicon-32x32.png
+│  ├─ favicon.ico
+│  ├─ site.webmanifest
+│  └─ images/
+│     ├─ guru1.JPG
+│     ├─ kepsek1.JPG
+│     ├─ logo.png
+│     ├─ siswa1.JPG
+│     └─ taman1.jpg
+│
+├─ css/
+│  ├─ style.css
+│  ├─ style_cek.css
+│  ├─ style_kllsn.css
+│  └─ style_spmb.css
+│
+├─ data/
+│  └─ siswa_kllsn.json
+│
+├─ js/
+│  ├─ database_kllsn.js
+│  ├─ main_kllsn.js
+│  └─ (catatan: ada data-spmb.js & script_spmb.js di root)
+│
+├─ cek_spmb.html
+├─ data-spmb.js
+├─ index.html
+├─ kelulusan.html
+├─ pengumuman.html
+├─ script.js
+├─ script_spmb.js
+└─ spmb-check.js
+

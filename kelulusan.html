@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Pengumuman Kelulusan | SMAN 8 Tanjung Jabung Timur</title>
+    <meta name="description" content="Periksa status kelulusan peserta didik kelas XII SMAN 8 Tanjung Jabung Timur secara online.">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+
+    <!-- SEO Open Graph -->
+    <meta property="og:title" content="Cek Kelulusan - SMAN 8 Tanjung Jabung Timur">
+    <meta property="og:description" content="Periksa status kelulusan peserta didik kelas XII berdasarkan 10 digit NISN.">
+    <meta property="og:image" content="assets/images/logo.png">
+    <meta property="og:url" content="https://sman8tanjabtim.sch.id/kelulusan.html">
+
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style_kllsn.css">
+</head>
+
+<body class="page-fade-in">
+    <!-- Global Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="container checker-page">
+        <section class="checker-card" aria-labelledby="cekTitle">
+            <!-- Header -->
+            <header class="checker-header">
+                <div class="checker-badge" id="yearBadge">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Tahun Ajaran 2025/2026</span>
+                </div>
+                <h1 id="cekTitle" class="checker-title">
+                    Cek Status Kelulusan Siswa
+                </h1>
+                <p class="checker-subtitle">
+                    Silakan periksa status kelulusan peserta didik kelas XII SMAN 8 Tanjung Jabung Timur dengan memasukkan 10 digit NISN Anda pada formulir di bawah ini.
+                </p>
+            </header>
+
+            <!-- Year Switcher Selector -->
+            <div class="year-switcher-wrapper">
+                <span class="year-switcher-label">
+                    <i class="fas fa-calendar-alt"></i> Pilih Tahun Ajaran Kelulusan:
+                </span>
+                <div class="year-pills" id="yearPills" role="tablist" aria-label="Pilih Tahun Ajaran">
+                    <button type="button" class="year-pill active" data-year="2025/2026">
+                        <i class="fas fa-calendar-check"></i> 2025/2026
+                    </button>
+                    <button type="button" class="year-pill" data-year="2026/2027">
+                        <i class="fas fa-calendar-alt"></i> 2026/2027
+                    </button>
+                    <button type="button" class="year-pill" data-year="2027/2028">
+                        <i class="fas fa-calendar-alt"></i> 2027/2028
+                    </button>
+                </div>
+            </div>
+
+            <!-- Countdown / Search Area -->
+            <div class="search-box-wrapper">
+                <!-- Countdown Section (when locked) -->
+                <div id="lock" class="countdown-container">
+                    <h3 class="countdown-title">
+                        <i class="fas fa-clock"></i> Pengumuman Kelulusan Akan Dibuka Dalam:
+                    </h3>
+                    <div class="countdown-boxes">
+                        <div class="time-box">
+                            <span id="days">00</span>
+                            <small>HARI</small>
+                        </div>
+                        <div class="time-box">
+                            <span id="hours">00</span>
+                            <small>JAM</small>
+                        </div>
+                        <div class="time-box">
+                            <span id="minutes">00</span>
+                            <small>MENIT</small>
+                        </div>
+                        <div class="time-box">
+                            <span id="seconds">00</span>
+                            <small>DETIK</small>
+                        </div>
+                    </div>
+                    <p id="countdownSub" class="countdown-status">Form pencarian NISN akan terbuka otomatis saat waktu pengumuman tiba.</p>
+                </div>
+
+                <!-- Search Form (when unlocked) -->
+                <div id="app" style="display:none;">
+                    <form id="searchForm">
+                        <label class="input-label" for="nisnInput">
+                            <i class="fas fa-id-badge"></i> Masukkan Nomor Induk Siswa Nasional (NISN)
+                        </label>
+                        <div class="input-group-row">
+                            <input 
+                                type="text" 
+                                class="input-nisn" 
+                                id="nisnInput" 
+                                placeholder="Contoh: 0081335737" 
+                                maxlength="10" 
+                                autocomplete="off" 
+                                inputmode="numeric" 
+                                aria-label="10 Digit NISN"
+                                required
+                            />
+                            <button type="submit" class="btn-cek-kelulusan" id="btnCekKelulusan">
+                                <i class="fas fa-search"></i>
+                                <span>Cek Kelulusan</span>
+                            </button>
+                        </div>
+                        <div class="input-hint">
+                            Pastikan NISN yang dimasukkan tepat 10 digit angka tanpa spasi atau tanda baca.
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Result Box -->
+            <div id="result">
+                <!-- Result renders dynamically via main_kllsn.js -->
+            </div>
+
+            <p class="note" id="note" role="status" aria-live="polite" style="text-align:center; margin-top:12px; color:#f87171; font-weight:600;"></p>
+
+            <!-- Bottom Actions -->
+            <div class="actions-bottom">
+                <a class="btn-secondary" href="pengumuman.html">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Pengumuman
+                </a>
+                <a class="btn-secondary" href="index.html">
+                    <i class="fas fa-home"></i> Menuju Beranda
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="navbar.js"></script>
+    <script src="footer.js"></script>
+    <script src="js/database_kllsn.js"></script>
+    <script src="js/main_kllsn.js"></script>
+    <script src="script_spmb.js"></script>
+    <script>
+      (function () {
+        const apply = () => {
+          document.body.classList.remove('page-fade-in');
+          void document.body.offsetHeight;
+          document.body.classList.add('page-fade-in');
+        };
+        apply();
+        window.addEventListener('pageshow', function (e) {
+          if (e.persisted) apply();
+        });
+      })();
+    </script>
+</body>
+</html>

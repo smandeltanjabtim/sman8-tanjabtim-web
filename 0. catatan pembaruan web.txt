@@ -1,0 +1,52 @@
+CATATAN PEMBARUAN TAMPILAN WEB SMAN 8 TANJUNG JABUNG TIMUR
+============================================================
+Tanggal Pembaruan: 23 Agustus 2026 / 3 September 2026
+Status: Selesai & Terverifikasi (Desktop & Mobile)
+
+Rincian Pembaruan:
+1. Beranda (index.html & style.css):
+   - Desain ulang Hero section modern dengan gradient halus dan badge resmi sekolah.
+   - Kartu statistik (Siswa Aktif, Guru & Staff, Prestasi) dengan glassmorphism dan animasi counter otomatis.
+   - Profil sekolah & About section dengan grid fitur elegan dan komposisi foto asimetris.
+   - Galeri kegiatan interaktif dengan rasio aspek terjaga, rounded modern, dan efek zoom saat kursor diarahkan (hover).
+   - Formulir kontak modern yang terhubung ke EmailJS dengan validasi dan penanganan error.
+
+2. Portal Pengumuman (pengumuman.html & css/style_spmb.css):
+   - Portal pusat informasi resmi dengan 3 kartu layanan unggulan:
+     a. Pengumuman Seleksi SPMB TA 2026/2027
+     b. Pengumuman Kelulusan Siswa TA 2025/2026
+     c. Unduh Kartu Pelajar Siswa (Format JPEG, JPG, PNG berbasis NISN)
+   - Penjelasan fitur dan tombol aksi bergradien yang elegan.
+
+3. Cek SPMB (cek_spmb.html, css/style_cek.css, spmb-check.js):
+   - Fitur Filter Tahun Ajaran: 2026/2027, 2027/2028, dan 2028/2029 dengan pill selector interaktif.
+   - Mengambil dan menyaring data seleksi hanya untuk tahun ajaran yang dipilih (mapping file per tahun di data_spmb).
+   - Penyesuaian hitung mundur (countdown) digital per tahun ajaran.
+   - Form pencarian disembunyikan selama countdown aktif, persis seperti halaman kelulusan.
+   - Tampilan hasil seleksi SPMB terstruktur rapi dengan kartu penerimaan, nama siswa, asal sekolah, jalur masuk, dan instruksi daftar ulang.
+
+4. Cek Kelulusan Siswa (kelulusan.html, css/style_kllsn.css, js/main_kllsn.js, js/database_kllsn.js):
+   - Fitur Filter Tahun Ajaran: 2025/2026, 2026/2027, dan 2027/2028 dengan pill selector interaktif.
+   - Pencarian NISN 10 digit hanya mencari pada database tahun ajaran yang sedang aktif dipilih.
+   - Jadwal hitung mundur kelulusan digital yang sinkron per tahun ajaran.
+   - Kartu status kelulusan (LULUS) yang estetik dan mewah dengan ucapan selamat resmi.
+
+5. Layanan Unduh Kartu Pelajar (kartu.html, css/style_kartu.css, script_kartu.js):
+   - Form pencarian kartu pelajar berbasis NISN siswa.
+   - Mendukung pencarian dan verifikasi otomatis file gambar kartu di folder data/kartu (format .png, .jpg, .jpeg).
+   - Fitur Pratinjau (Preview) Kartu, Zoom Layar Penuh (Modal Viewer), Unduh Gambar Asli (Direct Download), dan Cetak Dokumen (Print).
+
+6. Standardisasi Navbar & Responsivitas Mobile (320px - 2560px):
+   - Penyelarasan penuh kontainer navbar desktop (1240px) di seluruh halaman: index, pengumuman, cek_spmb, kelulusan, dan kartu.
+   - Menu hamburger dengan animasi transisi ke tanda silang (X).
+   - Dropdown menu mobile yang rapi, dengan backdrop blur dan penutupan otomatis saat tautan diklik.
+   - Tipografi dinamis dengan CSS clamp() dan zero horizontal overflow di seluruh perangkat.
+
+7. Sentralisasi Footer Menjadi 1 File Tunggal (footer.html & footer.js):
+   - Seluruh tag footer statis pada 5 halaman (index, pengumuman, cek_spmb, kelulusan, kartu) telah digantikan oleh wadah terpusat.
+   - Cukup mengedit file footer.html atau footer.js untuk memperbarui teks, tautan cepat, akun media sosial, maupun hak cipta secara serentak di seluruh halaman web.
+
+8. Sentralisasi Navbar Menjadi 1 File Tunggal (navbar.html & navbar.js):
+   - Seluruh tag navbar statis pada 5 halaman (index, pengumuman, cek_spmb, kelulusan, kartu) telah digantikan oleh wadah terpusat.
+   - Mendukung deteksi halaman otomatis untuk penyorotan tautan aktif (active link), interaksi mobile hamburger menu, dan efek navbar scroll secara terpadu.
+   - Cukup mengedit file navbar.html atau navbar.js untuk memperbarui navigasi sekolah di seluruh halaman web.

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unduh Kartu Pelajar | SMAN 8 Tanjung Jabung Timur</title>
+    <meta name="description" content="Layanan cetak dan unduh Kartu Pelajar Digital siswa SMAN 8 Tanjung Jabung Timur berdasarkan NISN.">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+
+    <!-- SEO Open Graph -->
+    <meta property="og:title" content="Unduh Kartu Pelajar - SMAN 8 Tanjung Jabung Timur">
+    <meta property="og:description" content="Periksa preview dan unduh kartu identitas pelajar siswa resmi secara mandiri.">
+    <meta property="og:image" content="assets/images/logo.png">
+    <meta property="og:url" content="https://sman8tanjabtim.sch.id/kartu.html">
+
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style_kartu.css">
+</head>
+
+<body class="page-fade-in">
+    <!-- Global Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="container checker-page">
+        <section class="checker-card" aria-labelledby="kartuTitle">
+            <!-- Header -->
+            <header class="checker-header">
+                <div class="checker-badge">
+                    <i class="fas fa-id-card"></i>
+                    <span>Layanan Kartu Pelajar Digital</span>
+                </div>
+                <h1 id="kartuTitle" class="checker-title">
+                    Unduh Kartu Pelajar Siswa
+                </h1>
+                <p class="checker-subtitle">
+                    Silakan masukkan Nomor Induk Siswa Nasional (NISN) Anda untuk melihat preview kartu dan mengunduh file gambar (JPEG, JPG, PNG) berkualitas tinggi.
+                </p>
+            </header>
+
+            <!-- Search Box Wrapper -->
+            <div class="search-box-wrapper">
+                <form id="searchForm">
+                    <label class="input-label" for="nisnInput">
+                        <i class="fas fa-id-badge"></i> Masukkan Nomor Induk Siswa Nasional (NISN)
+                    </label>
+                    <div class="input-group-row">
+                        <input 
+                            type="text" 
+                            class="input-nisn" 
+                            id="nisnInput" 
+                            placeholder="Contoh: 1000289776" 
+                            maxlength="15" 
+                            autocomplete="off"
+                            inputmode="numeric"
+                            aria-label="Nomor Induk Siswa Nasional"
+                            required
+                        />
+                        <button type="submit" class="btn-cari-kartu" id="btnCariKartu">
+                            <i class="fas fa-search"></i>
+                            <span>Lihat Kartu</span>
+                        </button>
+                    </div>
+                    <div class="input-hint">
+                        Masukkan NISN Anda yang terdaftar pada sistem sekolah tanpa tanda baca atau spasi.
+                    </div>
+                </form>
+            </div>
+
+            <!-- Result Box -->
+            <div id="result">
+                <!-- Result renders dynamically via script_kartu.js -->
+            </div>
+
+            <p class="note" id="note" role="status" aria-live="polite" style="text-align:center; margin-top:12px; color:#f87171; font-weight:600;"></p>
+
+            <!-- Bottom Actions -->
+            <div class="actions-bottom">
+                <a class="btn-secondary" href="pengumuman.html">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Pengumuman
+                </a>
+                <a class="btn-secondary" href="index.html">
+                    <i class="fas fa-home"></i> Menuju Beranda
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Fullscreen Image Preview Modal -->
+    <div class="modal-overlay" id="imageModal" aria-hidden="true" role="dialog">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modalClose" aria-label="Tutup Preview">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="" alt="Ukuran Penuh Kartu Pelajar" id="modalImg" />
+        </div>
+    </div>
+
+    <!-- Global Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="navbar.js"></script>
+    <script src="footer.js"></script>
+    <script src="js/database_kllsn.js"></script>
+    <script src="script_spmb.js"></script>
+    <script src="script_kartu.js"></script>
+    <script>
+      (function () {
+        const apply = () => {
+          document.body.classList.remove('page-fade-in');
+          void document.body.offsetHeight;
+          document.body.classList.add('page-fade-in');
+        };
+        apply();
+        window.addEventListener('pageshow', function (e) {
+          if (e.persisted) apply();
+        });
+      })();
+    </script>
+</body>
+</html>
