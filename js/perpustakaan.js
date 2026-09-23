@@ -1342,7 +1342,7 @@ function logout() {
   
   setTimeout(() => {
     // Arahkan ke halaman beranda (sesuaikan '/' dengan URL beranda yang sebenarnya jika perlu)
-  window.location.href = "index.html";
+  window.location.href = "https://smandeltanjabtim.github.io/sman8-tanjabtim-web/";
   }, 1000);
 }
 
