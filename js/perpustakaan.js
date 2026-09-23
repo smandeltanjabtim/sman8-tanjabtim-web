@@ -1342,7 +1342,7 @@ function logout() {
   
   setTimeout(() => {
     // Arahkan ke halaman beranda (sesuaikan '/' dengan URL beranda yang sebenarnya jika perlu)
-    window.location.href = '/'; 
+  window.location.href = "index.html";
   }, 1000);
 }
 
