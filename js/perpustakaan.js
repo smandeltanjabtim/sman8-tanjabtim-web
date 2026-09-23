@@ -440,7 +440,9 @@ async function handleBookSubmit(e) {
   btn.disabled = true;
   btn.innerHTML = '<span class="loading-spinner inline-block mr-2"></span>Menyimpan...';
 
-  const copies   = parseInt(document.getElementById('book-copies').value) || 1;
+  // Pastikan dikonversi ke angka dengan parseInt, jika kosong/NaN berikan nilai minimal 1
+  const copies = parseInt(document.getElementById('book-copies').value) || 1;
+  
   const bookData = {
     type:       'book',
     title:      document.getElementById('book-title').value,
@@ -450,7 +452,8 @@ async function handleBookSubmit(e) {
     category:   document.getElementById('book-category').value,
     isbn:       document.getElementById('book-isbn').value,
     copies:     copies,
-    available:  editingBook ? editingBook.available : copies,
+    // PERBAIKAN DI SINI: Jika buku baru, 'available' harus sama dengan 'copies'
+    available:  editingBook ? (parseInt(editingBook.available) || copies) : copies,
     location:   document.getElementById('book-location').value,
     created_at: editingBook?.created_at || new Date().toISOString()
   };
@@ -521,11 +524,11 @@ async function processBulkBooks() {
         category:   parts[4] || 'Umum',
         isbn:       parts[5] || '',
         copies:     copies,
-        available:  copies,
+        available:  copies, // <--- Pastikan baris ini ada dan bernilai sama dengan copies
         location:   parts[7] || '',
         created_at: new Date().toISOString()
-      };
-      const result = await window.dataSdk.create(bookData);
+      };      
+const result = await window.dataSdk.create(bookData);
       if (result.isOk) success++; else failed++;
     } else {
       failed++;
