@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Perpustakaan Digital</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- SDK -->
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS Perpustakaan -->
+  <link rel="stylesheet" href="css/style_perpustakaan.css">
+  <!-- SheetJS untuk membaca/menulis Excel -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+ </head>
+
+ <body class="h-full bg-slate-50 text-slate-800 overflow-hidden">
+  <div id="app" class="h-full flex">
+
+   <!-- ═══════════════════════════════════════
+        SIDEBAR
+   ════════════════════════════════════════ -->
+   <aside id="sidebar" class="w-64 bg-white border-r border-slate-200 flex flex-col h-full">
+
+    <!-- Logo & Nama Perpustakaan -->
+    <div class="p-5 border-b border-slate-200">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+       </svg>
+      </div>
+      <div>
+       <h1 id="library-name" class="font-bold text-slate-800 text-sm">Perpustakaan Digital</h1>
+       <p class="text-xs text-slate-500">Sistem Manajemen</p>
+      </div>
+     </div>
+    </div>
+
+    <!-- Menu Navigasi -->
+    <nav class="flex-1 p-3 overflow-y-auto">
+     <ul class="space-y-1">
+      <li>
+       <button onclick="navigateTo('dashboard')" class="sidebar-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-700" data-page="dashboard">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+        Dashboard
+       </button>
+      </li>
+      <li>
+       <button onclick="navigateTo('books')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-700" data-page="books">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        Data Buku
+       </button>
+      </li>
+      <li>
+       <button onclick="navigateTo('members')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-700" data-page="members">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        Data Anggota
+       </button>
+      </li>
+      <li>
+       <button onclick="navigateTo('borrow')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-700" data-page="borrow">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+        Peminjaman
+       </button>
+      </li>
+      <li>
+       <button onclick="navigateTo('returns')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-700" data-page="returns">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Pengembalian
+       </button>
+      </li>
+      <li>
+       <button onclick="navigateTo('reports')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-700" data-page="reports">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        Laporan
+       </button>
+      </li>
+     </ul>
+    </nav>
+
+<!-- Info Admin -->
+    <div class="p-4 border-t border-slate-200 relative">
+     <!-- Tombol Admin -->
+     <button onclick="toggleAdminPopup(event)" class="w-full flex items-center gap-3 px-3 py-2 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors text-left cursor-pointer">
+      <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
+       <span class="text-indigo-600 font-semibold text-sm">A</span>
+      </div>
+      <div class="flex-1 min-w-0">
+       <p class="text-sm font-medium text-slate-800 truncate">Admin</p>
+       <p class="text-xs text-slate-500">Administrator</p>
+      </div>
+     </button>
+
+     <!-- Pop-up Menu di Sebelah Kanan -->
+     <div id="admin-popup" class="hidden absolute bottom-4 left-full ml-2 w-56 bg-white border border-slate-200 rounded-xl shadow-lg z-50 popup-anim">
+      <div class="p-2">
+       <button onclick="logout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+        Logout
+       </button>
+      </div>
+     </div>
+    </div>
+
+   </aside>
+
+   <!-- ═══════════════════════════════════════
+        KONTEN UTAMA
+   ════════════════════════════════════════ -->
+   <main class="flex-1 flex flex-col h-full overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4">
+     <div class="flex items-center justify-between">
+      <div>
+       <h2 id="page-title" class="text-xl font-bold text-slate-800">Dashboard</h2>
+       <p id="welcome-text" class="text-sm text-slate-500">Selamat datang di sistem perpustakaan</p>
+      </div>
+      <div class="flex items-center gap-3">
+       <div class="relative">
+        <input type="text" id="global-search" placeholder="Cari..." class="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm w-64 focus:border-indigo-500">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+       </div>
+      </div>
+     </div>
+    </header>
+
+    <!-- Area Konten -->
+    <div id="content-area" class="flex-1 overflow-auto p-6">
+
+     <!-- ─── HALAMAN: DASHBOARD ─── -->
+     <div id="page-dashboard" class="page-content">
+
+      <!-- Kartu Statistik -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+       <!-- Total Buku -->
+       <div class="card-stat rounded-xl p-5">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="text-sm text-slate-500 mb-1">Total Buku</p>
+          <p id="stat-total-books" class="text-2xl font-bold text-slate-800">0</p>
+         </div>
+         <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+         </div>
+        </div>
+       </div>
+       <!-- Sedang Dipinjam -->
+       <div class="card-stat rounded-xl p-5">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="text-sm text-slate-500 mb-1">Sedang Dipinjam</p>
+          <p id="stat-borrowed" class="text-2xl font-bold text-amber-600">0</p>
+         </div>
+         <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+         </div>
+        </div>
+       </div>
+       <!-- Buku Tersedia -->
+       <div class="card-stat rounded-xl p-5">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="text-sm text-slate-500 mb-1">Buku Tersedia</p>
+          <p id="stat-available" class="text-2xl font-bold text-emerald-600">0</p>
+         </div>
+         <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+         </div>
+        </div>
+       </div>
+       <!-- Total Anggota -->
+       <div class="card-stat rounded-xl p-5">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="text-sm text-slate-500 mb-1">Total Anggota</p>
+          <p id="stat-members" class="text-2xl font-bold text-purple-600">0</p>
+         </div>
+         <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+         </div>
+        </div>
+       </div>
+      </div>
+
+      <!-- Aktivitas Terbaru & Statistik -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+       <!-- Peminjaman Terbaru -->
+       <div class="bg-white rounded-xl border border-slate-200 p-5">
+        <h3 class="font-semibold text-slate-800 mb-4">Peminjaman Terbaru</h3>
+        <div id="recent-borrows" class="space-y-3">
+         <p class="text-sm text-slate-500 text-center py-4">Belum ada data peminjaman</p>
+        </div>
+       </div>
+       <!-- Statistik Bulanan -->
+       <div class="bg-white rounded-xl border border-slate-200 p-5">
+        <h3 class="font-semibold text-slate-800 mb-4">Statistik Bulan Ini</h3>
+        <div class="space-y-4">
+         <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+          <span class="text-sm text-slate-600">Total Peminjaman</span>
+          <span id="monthly-borrows" class="font-semibold text-indigo-600">0</span>
+         </div>
+         <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+          <span class="text-sm text-slate-600">Pengembalian</span>
+          <span id="monthly-returns" class="font-semibold text-emerald-600">0</span>
+         </div>
+         <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+          <span class="text-sm text-slate-600">Terlambat</span>
+          <span id="monthly-overdue" class="font-semibold text-red-600">0</span>
+         </div>
+         <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+          <span class="text-sm text-slate-600">Total Denda</span>
+          <span id="monthly-fines" class="font-semibold text-amber-600">Rp 0</span>
+         </div>
+        </div>
+       </div>
+      </div>
+
+     </div><!-- /page-dashboard -->
+
+     <!-- ─── HALAMAN: DATA BUKU ─── -->
+     <div id="page-books" class="page-content hidden">
+      <div class="bg-white rounded-xl border border-slate-200">
+       <!-- Toolbar Buku -->
+       <div class="p-5 border-b border-slate-200">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+         <div class="flex items-center gap-3 flex-wrap">
+          <input type="text" id="book-search" placeholder="Cari buku..." class="px-4 py-2 border border-slate-200 rounded-lg text-sm w-48" onkeyup="filterBooks()">
+          <select id="book-category-filter" class="px-4 py-2 border border-slate-200 rounded-lg text-sm" onchange="filterBooks()">
+           <option value="">Semua Kategori</option>
+           <option value="Fiksi">Fiksi</option>
+           <option value="Non-Fiksi">Non-Fiksi</option>
+           <option value="Sains">Sains</option>
+           <option value="Teknologi">Teknologi</option>
+           <option value="Sejarah">Sejarah</option>
+           <option value="Biografi">Biografi</option>
+           <option value="Anak-anak">Anak-anak</option>
+          </select>
+         </div>
+         <div class="flex gap-2">
+          <button onclick="showBulkBookModal()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+           Tambah Kolektif
+          </button>
+          <button onclick="showBookModal()" class="btn-primary px-4 py-2 text-white rounded-lg text-sm font-medium flex items-center gap-2">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+           Tambah Buku
+          </button>
+         </div>
+        </div>
+       </div>
+       <!-- Tabel Buku -->
+       <div class="overflow-x-auto">
+        <!-- Hapus Massal -->
+        <div id="book-bulk-delete" class="hidden mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between">
+         <div>
+          <p class="text-sm font-medium text-red-800"><span id="selected-books-count">0</span> buku dipilih</p>
+          <p class="text-xs text-red-600">Pilih data yang ingin dihapus kemudian klik tombol hapus</p>
+         </div>
+         <div class="flex gap-2">
+          <button onclick="clearBookSelection()" class="px-3 py-1.5 border border-red-300 text-red-700 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors">Batal</button>
+          <button onclick="bulkDeleteBooks()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors">Hapus Terpilih</button>
+         </div>
+        </div>
+        <table class="w-full">
+         <thead class="bg-slate-50">
+          <tr>
+           <th class="px-5 py-3 text-left"><input type="checkbox" id="book-select-all" onchange="toggleSelectAllBooks(this)" class="rounded"></th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Judul</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Penulis</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Kategori</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">ISBN</th>
+           <th class="text-center px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Stok</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Lokasi</th>
+           <th class="text-center px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Aksi</th>
+          </tr>
+         </thead>
+         <tbody id="books-table-body" class="divide-y divide-slate-200">
+          <tr><td colspan="8" class="px-5 py-8 text-center text-slate-500">Belum ada data buku</td></tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </div><!-- /page-books -->
+
+     <!-- ─── HALAMAN: DATA ANGGOTA ─── -->
+     <div id="page-members" class="page-content hidden">
+      <div class="bg-white rounded-xl border border-slate-200">
+       <!-- Toolbar Anggota -->
+       <div class="p-5 border-b border-slate-200">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+         <input type="text" id="member-search" placeholder="Cari anggota..." class="px-4 py-2 border border-slate-200 rounded-lg text-sm w-64" onkeyup="filterMembers()">
+         <div class="flex gap-2">
+          <button onclick="showBulkMemberModal()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+           Tambah Kolektif
+          </button>
+          <button onclick="showMemberModal()" class="btn-primary px-4 py-2 text-white rounded-lg text-sm font-medium flex items-center gap-2">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+           Tambah Anggota
+          </button>
+         </div>
+        </div>
+       </div>
+       <!-- Tabel Anggota -->
+       <div class="overflow-x-auto">
+        <!-- Hapus Massal -->
+        <div id="member-bulk-delete" class="hidden mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between">
+         <div>
+          <p class="text-sm font-medium text-red-800"><span id="selected-members-count">0</span> anggota dipilih</p>
+          <p class="text-xs text-red-600">Pilih data yang ingin dihapus kemudian klik tombol hapus</p>
+         </div>
+         <div class="flex gap-2">
+          <button onclick="clearMemberSelection()" class="px-3 py-1.5 border border-red-300 text-red-700 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors">Batal</button>
+          <button onclick="bulkDeleteMembers()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors">Hapus Terpilih</button>
+         </div>
+        </div>
+        <table class="w-full">
+         <thead class="bg-slate-50">
+          <tr>
+           <th class="px-5 py-3 text-left"><input type="checkbox" id="member-select-all" onchange="toggleSelectAllMembers(this)" class="rounded"></th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">No. Anggota</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Nama</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Email</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Telepon</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Tgl Bergabung</th>
+           <th class="text-center px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Aksi</th>
+          </tr>
+         </thead>
+         <tbody id="members-table-body" class="divide-y divide-slate-200">
+          <tr><td colspan="7" class="px-5 py-8 text-center text-slate-500">Belum ada data anggota</td></tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </div><!-- /page-members -->
+
+     <!-- ─── HALAMAN: PEMINJAMAN ─── -->
+     <div id="page-borrow" class="page-content hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+       <!-- Form Peminjaman -->
+       <div class="bg-white rounded-xl border border-slate-200 p-6">
+        <h3 class="font-semibold text-slate-800 mb-4">Form Peminjaman Buku</h3>
+        <form id="borrow-form" onsubmit="handleBorrow(event)" class="space-y-4">
+         <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1" for="borrow-member">Anggota</label>
+          <select id="borrow-member" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" required>
+           <option value="">Pilih Anggota</option>
+          </select>
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1" for="borrow-book">Buku</label>
+          <select id="borrow-book" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" required>
+           <option value="">Pilih Buku</option>
+          </select>
+         </div>
+         <div class="grid grid-cols-2 gap-4">
+          <div>
+           <label class="block text-sm font-medium text-slate-700 mb-1" for="borrow-date">Tanggal Pinjam</label>
+           <input type="date" id="borrow-date" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" required>
+          </div>
+          <div>
+           <label class="block text-sm font-medium text-slate-700 mb-1" for="due-date">Tanggal Kembali</label>
+           <input type="date" id="due-date" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" required readonly>
+          </div>
+         </div>
+         <button type="submit" id="borrow-submit-btn" class="btn-primary w-full py-2.5 text-white rounded-lg text-sm font-medium">
+          Proses Peminjaman
+         </button>
+        </form>
+       </div>
+       <!-- Peminjaman Aktif -->
+       <div class="bg-white rounded-xl border border-slate-200 p-6">
+        <h3 class="font-semibold text-slate-800 mb-4">Daftar Peminjaman Aktif</h3>
+        <div id="active-borrows" class="space-y-3 max-h-96 overflow-y-auto">
+         <p class="text-sm text-slate-500 text-center py-4">Belum ada peminjaman aktif</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- /page-borrow -->
+
+     <!-- ─── HALAMAN: PENGEMBALIAN ─── -->
+     <div id="page-returns" class="page-content hidden">
+      <div class="bg-white rounded-xl border border-slate-200">
+       <div class="p-5 border-b border-slate-200">
+        <h3 class="font-semibold text-slate-800">Daftar Buku yang Dipinjam</h3>
+        <p class="text-sm text-slate-500">Klik tombol "Kembalikan" untuk memproses pengembalian buku</p>
+       </div>
+       <div class="overflow-x-auto">
+        <table class="w-full">
+         <thead class="bg-slate-50">
+          <tr>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Anggota</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Buku</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Tgl Pinjam</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Jatuh Tempo</th>
+           <th class="text-left px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
+           <th class="text-center px-5 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider">Aksi</th>
+          </tr>
+         </thead>
+         <tbody id="returns-table-body" class="divide-y divide-slate-200">
+          <tr><td colspan="6" class="px-5 py-8 text-center text-slate-500">Tidak ada buku yang dipinjam</td></tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </div><!-- /page-returns -->
+
+     <!-- ─── HALAMAN: LAPORAN ─── -->
+     <div id="page-reports" class="page-content hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+       <!-- Buku Paling Sering Dipinjam -->
+       <div class="bg-white rounded-xl border border-slate-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="font-semibold text-slate-800">Buku Paling Sering Dipinjam</h3>
+         <button onclick="exportReport('popular-books')" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">Ekspor</button>
+        </div>
+        <div id="popular-books-list" class="space-y-3">
+         <p class="text-sm text-slate-500 text-center py-4">Belum ada data</p>
+        </div>
+       </div>
+       <!-- Anggota Paling Aktif -->
+       <div class="bg-white rounded-xl border border-slate-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="font-semibold text-slate-800">Anggota Paling Aktif</h3>
+         <button onclick="exportReport('active-members')" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">Ekspor</button>
+        </div>
+        <div id="active-members-list" class="space-y-3">
+         <p class="text-sm text-slate-500 text-center py-4">Belum ada data</p>
+        </div>
+       </div>
+       <!-- Buku Terlambat -->
+       <div class="bg-white rounded-xl border border-slate-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="font-semibold text-slate-800">Buku Terlambat Dikembalikan</h3>
+         <button onclick="exportReport('overdue')" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">Ekspor</button>
+        </div>
+        <div id="overdue-list" class="space-y-3">
+         <p class="text-sm text-slate-500 text-center py-4">Tidak ada buku terlambat</p>
+        </div>
+       </div>
+       <!-- Ringkasan Denda -->
+       <div class="bg-white rounded-xl border border-slate-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="font-semibold text-slate-800">Ringkasan Denda</h3>
+         <button onclick="exportReport('fines')" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">Ekspor</button>
+        </div>
+        <div class="space-y-4">
+         <div class="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+          <div>
+           <p class="text-sm text-slate-600">Total Denda Belum Dibayar</p>
+           <p id="total-unpaid-fines" class="text-xl font-bold text-red-600">Rp 0</p>
+          </div>
+          <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+         </div>
+         <div class="flex items-center justify-between p-4 bg-emerald-50 rounded-lg">
+          <div>
+           <p class="text-sm text-slate-600">Total Denda Terkumpul</p>
+           <p id="total-collected-fines" class="text-xl font-bold text-emerald-600">Rp 0</p>
+          </div>
+          <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- /page-reports -->
+
+    </div><!-- /content-area -->
+   </main>
+  </div><!-- /app -->
+
+  <!-- ═══════════════════════════════════════
+       MODAL: TAMBAH / EDIT BUKU
+  ════════════════════════════════════════ -->
+  <div id="book-modal" class="fixed inset-0 bg-black/50 modal-overlay hidden items-center justify-center z-50 p-4">
+   <div class="bg-white rounded-2xl w-full max-w-lg max-h-[90%] overflow-y-auto">
+    <div class="p-6 border-b border-slate-200">
+     <div class="flex items-center justify-between">
+      <h3 id="book-modal-title" class="text-lg font-semibold text-slate-800">Tambah Buku Baru</h3>
+      <button onclick="closeBookModal()" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+       <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+     </div>
+    </div>
+    <form id="book-form" onsubmit="handleBookSubmit(event)" class="p-6 space-y-4">
+     <input type="hidden" id="book-id">
+     <div class="grid grid-cols-2 gap-4">
+      <div class="col-span-2">
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="book-title">Judul Buku *</label>
+       <input type="text" id="book-title" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" required>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="book-author">Penulis *</label>
+       <input type="text" id="book-author" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" required>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="book-publisher">Penerbit</label>
+       <input type="text" id="book-publisher" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="book-year">Tahun Terbit</label>
+       <input type="number" id="book-year" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" min="1900" max="2099">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="book-category">Kategori *</label>
+       <select id="book-category" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" required>
+        <option value="">Pilih Kategori</option>
+        <option value="Fiksi">Fiksi</option>
+        <option value="Non-Fiksi">Non-Fiksi</option>
+        <option value="Sains">Sains</option>
+        <option value="Teknologi">Teknologi</option>
+        <option value="Sejarah">Sejarah</option>
+        <option value="Biografi">Biografi</option>
+        <option value="Anak-anak">Anak-anak</option>
+       </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="book-isbn">ISBN</label>
+       <input type="text" id="book-isbn" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="book-copies">Jumlah Eksemplar *</label>
+       <input type="number" id="book-copies" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" min="1" value="1" required>
+      </div>
+      <div class="col-span-2">
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="book-location">Lokasi Rak</label>
+       <input type="text" id="book-location" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" placeholder="Contoh: Rak A-01">
+      </div>
+     </div>
+     <div class="flex gap-3 pt-4">
+      <button type="button" onclick="closeBookModal()" class="flex-1 px-4 py-2.5 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Batal</button>
+      <button type="submit" id="book-submit-btn" class="flex-1 btn-primary px-4 py-2.5 text-white rounded-lg text-sm font-medium">Simpan</button>
+     </div>
+    </form>
+   </div>
+  </div>
+
+<!-- ═══════════════════════════════════════
+       MODAL: TAMBAH BUKU KOLEKTIF
+  ════════════════════════════════════════ -->
+  <div id="bulk-book-modal" class="fixed inset-0 bg-black/50 modal-overlay hidden items-center justify-center z-50 p-4">
+   <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90%] overflow-y-auto">
+    <div class="p-6 border-b border-slate-200">
+     <div class="flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-slate-800">Tambah Buku Kolektif</h3>
+      <button onclick="closeBulkBookModal()" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+       <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+     </div>
+    </div>
+    <div class="p-6">
+     <!-- Tambahan Tombol Excel Buku -->
+     <div class="flex flex-wrap items-center gap-3 mb-4 p-3 bg-slate-50 border border-slate-200 rounded-lg">
+      <p class="text-sm font-medium text-slate-700 w-full sm:w-auto mr-auto">Gunakan File Excel:</p>
+      <button type="button" onclick="downloadExcelTemplate('book')" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-medium flex items-center gap-2 transition-colors shadow-sm">
+       <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+       1. Unduh Format
+      </button>
+      <div class="relative">
+       <input type="file" id="excel-upload-book" accept=".xlsx, .xls, .csv" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="handleExcelUpload(event, 'book')">
+       <button type="button" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-medium flex items-center gap-2 transition-colors shadow-sm pointer-events-none">
+        <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+        2. Upload Excel
+       </button>
+      </div>
+     </div>
+     <!-- Akhir Tambahan Tombol Excel Buku -->
+
+     <p class="text-sm text-slate-600 mb-4">Atau masukkan data manual dalam format: <code class="bg-slate-100 px-2 py-1 rounded text-xs">Judul | Penulis | Penerbit | Tahun | Kategori | ISBN | Jumlah | Lokasi</code></p>
+     <p class="text-sm text-slate-500 mb-4">Satu buku per baris. Contoh:</p>
+     <pre class="bg-slate-100 p-3 rounded-lg text-xs mb-4 overflow-x-auto">Laskar Pelangi | Andrea Hirata | Bentang | 2005 | Fiksi | 978-979-1227-01-2 | 3 | Rak A-01</pre>
+     <textarea id="bulk-book-input" class="w-full px-4 py-3 border border-slate-200 rounded-lg text-sm h-48 font-mono" placeholder="Masukkan data buku di sini..."></textarea>
+     <div class="flex gap-3 pt-4">
+      <button type="button" onclick="closeBulkBookModal()" class="flex-1 px-4 py-2.5 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Batal</button>
+      <button type="button" id="bulk-book-btn" onclick="processBulkBooks()" class="flex-1 btn-primary px-4 py-2.5 text-white rounded-lg text-sm font-medium">Proses Data</button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- ═══════════════════════════════════════
+       MODAL: TAMBAH / EDIT ANGGOTA
+  ════════════════════════════════════════ -->
+  <div id="member-modal" class="fixed inset-0 bg-black/50 modal-overlay hidden items-center justify-center z-50 p-4">
+   <div class="bg-white rounded-2xl w-full max-w-lg max-h-[90%] overflow-y-auto">
+    <div class="p-6 border-b border-slate-200">
+     <div class="flex items-center justify-between">
+      <h3 id="member-modal-title" class="text-lg font-semibold text-slate-800">Tambah Anggota Baru</h3>
+      <button onclick="closeMemberModal()" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+       <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+     </div>
+    </div>
+    <form id="member-form" onsubmit="handleMemberSubmit(event)" class="p-6 space-y-4">
+     <input type="hidden" id="member-id">
+     <div class="grid grid-cols-2 gap-4">
+      <div class="col-span-2">
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="member-name">Nama Lengkap *</label>
+       <input type="text" id="member-name" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" required>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="member-number">Nomor Anggota *</label>
+       <input type="text" id="member-number" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" required>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="member-phone">Nomor Telepon</label>
+       <input type="tel" id="member-phone" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm">
+      </div>
+      <div class="col-span-2">
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="member-email">Email</label>
+       <input type="email" id="member-email" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm">
+      </div>
+      <div class="col-span-2">
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="member-address">Alamat</label>
+       <textarea id="member-address" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" rows="2"></textarea>
+      </div>
+      <div class="col-span-2">
+       <label class="block text-sm font-medium text-slate-700 mb-1" for="member-join-date">Tanggal Bergabung</label>
+       <input type="date" id="member-join-date" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm">
+      </div>
+     </div>
+     <div class="flex gap-3 pt-4">
+      <button type="button" onclick="closeMemberModal()" class="flex-1 px-4 py-2.5 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Batal</button>
+      <button type="submit" id="member-submit-btn" class="flex-1 btn-primary px-4 py-2.5 text-white rounded-lg text-sm font-medium">Simpan</button>
+     </div>
+    </form>
+   </div>
+  </div>
+
+<!-- ═══════════════════════════════════════
+       MODAL: TAMBAH ANGGOTA KOLEKTIF
+  ════════════════════════════════════════ -->
+  <div id="bulk-member-modal" class="fixed inset-0 bg-black/50 modal-overlay hidden items-center justify-center z-50 p-4">
+   <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90%] overflow-y-auto">
+    <div class="p-6 border-b border-slate-200">
+     <div class="flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-slate-800">Tambah Anggota Kolektif</h3>
+      <button onclick="closeBulkMemberModal()" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+       <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+     </div>
+    </div>
+    <div class="p-6">
+     <!-- Tambahan Tombol Excel Anggota -->
+     <div class="flex flex-wrap items-center gap-3 mb-4 p-3 bg-slate-50 border border-slate-200 rounded-lg">
+      <p class="text-sm font-medium text-slate-700 w-full sm:w-auto mr-auto">Gunakan File Excel:</p>
+      <button type="button" onclick="downloadExcelTemplate('member')" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-medium flex items-center gap-2 transition-colors shadow-sm">
+       <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+       1. Unduh Format
+      </button>
+      <div class="relative">
+       <input type="file" id="excel-upload-member" accept=".xlsx, .xls, .csv" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="handleExcelUpload(event, 'member')">
+       <button type="button" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-medium flex items-center gap-2 transition-colors shadow-sm pointer-events-none">
+        <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+        2. Upload Excel
+       </button>
+      </div>
+     </div>
+     <!-- Akhir Tambahan Tombol Excel Anggota -->
+
+     <p class="text-sm text-slate-600 mb-4">Atau masukkan data manual dalam format: <code class="bg-slate-100 px-2 py-1 rounded text-xs">Nama | No. Anggota | Alamat | Telepon | Email</code></p>
+     <p class="text-sm text-slate-500 mb-4">Satu anggota per baris. Contoh:</p>
+     <pre class="bg-slate-100 p-3 rounded-lg text-xs mb-4 overflow-x-auto">Ahmad Fadli | M001 | Jl. Merdeka No. 10 | 081234567890 | ahmad@email.com</pre>
+     <textarea id="bulk-member-input" class="w-full px-4 py-3 border border-slate-200 rounded-lg text-sm h-48 font-mono" placeholder="Masukkan data anggota di sini..."></textarea>
+     <div class="flex gap-3 pt-4">
+      <button type="button" onclick="closeBulkMemberModal()" class="flex-1 px-4 py-2.5 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Batal</button>
+      <button type="button" id="bulk-member-btn" onclick="processBulkMembers()" class="flex-1 btn-primary px-4 py-2.5 text-white rounded-lg text-sm font-medium">Proses Data</button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- ═══════════════════════════════════════
+       MODAL: KONFIRMASI HAPUS
+  ════════════════════════════════════════ -->
+  <div id="delete-modal" class="fixed inset-0 bg-black/50 modal-overlay hidden items-center justify-center z-50 p-4">
+   <div class="bg-white rounded-2xl w-full max-w-sm delete-confirm">
+    <div class="p-6 text-center">
+     <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+      <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+     </div>
+     <h3 class="text-lg font-semibold text-slate-800 mb-2">Konfirmasi Hapus</h3>
+     <p id="delete-message" class="text-sm text-slate-600 mb-6">Apakah Anda yakin ingin menghapus data ini?</p>
+     <div class="flex gap-3">
+      <button onclick="closeDeleteModal()" class="flex-1 px-4 py-2.5 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">Batal</button>
+      <button id="confirm-delete-btn" onclick="confirmDelete()" class="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors">Hapus</button>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <!-- Toast Notifikasi -->
+  <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+  <!-- JavaScript Perpustakaan -->
+  <script src="js/perpustakaan.js"></script>
+
+ </body>
+</html>

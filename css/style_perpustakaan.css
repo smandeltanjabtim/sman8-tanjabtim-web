@@ -1,0 +1,119 @@
+/* =====================================================
+   PERPUSTAKAAN DIGITAL - CSS
+   SMAN 8 Tanjung Jabung Timur
+   ===================================================== */
+
+body {
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Sidebar */
+.sidebar-item {
+  transition: all 0.2s ease;
+}
+.sidebar-item:hover,
+.sidebar-item.active {
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.15) 0%, transparent 100%);
+  border-left: 3px solid #6366f1;
+}
+
+/* Card Statistik */
+.card-stat {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Tombol Utama */
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  transition: all 0.2s ease;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  transform: translateY(-1px);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  backdrop-filter: blur(4px);
+}
+
+/* Tabel */
+.table-row:hover {
+  background-color: #f8fafc;
+}
+
+/* Input Focus */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Toast Notifikasi */
+.toast {
+  animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+}
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #6366f1;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Konfirmasi Hapus */
+.delete-confirm {
+  animation: pulse 0.3s ease;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.02); }
+}
+
+/* View Transition */
+@view-transition {
+  navigation: auto;
+}
+
+/* =====================================================
+   Admin Pop-up Animasi
+   ===================================================== */
+.popup-anim {
+  animation: popupFade 0.2s ease-out forwards;
+}
+
+@keyframes popupFade {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+

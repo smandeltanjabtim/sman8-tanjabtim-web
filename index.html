@@ -26,6 +26,115 @@
     
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <style>
+        .library-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 15, 26, 0.65);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .library-modal-overlay.active {
+            display: flex;
+        }
+        .library-modal-box {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 32px 30px;
+            max-width: 380px;
+            width: 100%;
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 24px 60px rgba(10, 15, 26, 0.35);
+            border-top: 4px solid #16324f;
+        }
+        .library-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            line-height: 1;
+            color: #9aa5b1;
+            cursor: pointer;
+        }
+        .library-modal-close:hover {
+            color: #16324f;
+        }
+        .library-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .library-modal-header i {
+            color: #16324f;
+            font-size: 17px;
+        }
+        .library-modal-box h3 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 600;
+            color: #16324f;
+        }
+        .library-modal-desc {
+            margin: 0 0 22px;
+            font-size: 13.5px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+        .library-form-group {
+            margin-bottom: 14px;
+        }
+        .library-form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+        .library-form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+        .library-form-group input:focus {
+            outline: none;
+            border-color: #16324f;
+        }
+        .library-error-msg {
+            display: none;
+            color: #b91c1c;
+            font-size: 13px;
+            margin: -4px 0 12px;
+        }
+        .library-error-msg.show {
+            display: block;
+        }
+        .library-modal-submit {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 7px;
+            background: #16324f;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .library-modal-submit:hover {
+            background: #0f2438;
+        }
+    </style>
     
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -59,6 +168,9 @@
                     <a href="pengumuman.html" class="btn btn-accent">
                         <i class="fas fa-bullhorn"></i> Cek Pengumuman
                     </a>
+                    <button type="button" id="btnPerpustakaan" class="btn btn-secondary">
+                        <i class="fas fa-book"></i> Kunjungi Perpustakaan
+                    </button>
                     <a href="#contact" class="btn btn-secondary">
                         <i class="fas fa-paper-plane"></i> Hubungi Kami
                     </a>
@@ -277,22 +389,34 @@
     <!-- Global Footer -->
     <div id="footer-placeholder"></div>
 
+    <!-- Modal Login Admin Perpustakaan -->
+    <div id="libraryLoginModal" class="library-modal-overlay">
+        <div class="library-modal-box">
+            <button type="button" class="library-modal-close" id="libraryModalClose" aria-label="Tutup">&times;</button>
+            <div class="library-modal-header">
+                <i class="fas fa-lock"></i>
+                <h3>Login Admin Perpustakaan</h3>
+            </div>
+            <p class="library-modal-desc">Halaman ini khusus untuk admin sekolah. Masuk untuk melanjutkan.</p>
+            <form id="libraryLoginForm">
+                <div class="library-form-group">
+                    <label for="libUsername">Username</label>
+                    <input type="text" id="libUsername" autocomplete="username" required>
+                </div>
+                <div class="library-form-group">
+                    <label for="libPassword">Password</label>
+                    <input type="password" id="libPassword" autocomplete="current-password" required>
+                </div>
+                <p id="libraryLoginError" class="library-error-msg">Username atau password salah.</p>
+                <button type="submit" class="library-modal-submit">Masuk</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="navbar.js"></script>
     <script src="footer.js"></script>
     <script src="script.js"></script>
-    <script>
-      (function () {
-        const apply = () => {
-          document.body.classList.remove('page-fade-in');
-          void document.body.offsetHeight;
-          document.body.classList.add('page-fade-in');
-        };
-        apply();
-        window.addEventListener('pageshow', function (e) {
-          if (e.persisted) apply();
-        });
-      })();
-    </script>
+
 </body>
 </html>

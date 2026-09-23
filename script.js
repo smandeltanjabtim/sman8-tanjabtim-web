@@ -178,3 +178,67 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+  (function () {
+        const apply = () => {
+          document.body.classList.remove('page-fade-in');
+          void document.body.offsetHeight;
+          document.body.classList.add('page-fade-in');
+        };
+        apply();
+        window.addEventListener('pageshow', function (e) {
+          if (e.persisted) apply();
+        });
+      })();
+
+      (function () {
+        // Proteksi sisi-klien untuk tombol Perpustakaan.
+        // CATATAN: ini BUKAN keamanan sesungguhnya. Kredensial di bawah ada di
+        // kode sumber dan bisa dilihat siapa saja lewat "View Page Source".
+        // Untuk halaman yang benar-benar sensitif, proteksi harus dilakukan
+        // di sisi server (PHP session, .htaccess, dsb).
+        const ADMIN_USERNAME = 'Admin';
+        const ADMIN_PASSWORD = 'Smandel8*'; // TODO: ganti sebelum situs live
+
+        const btn = document.getElementById('btnPerpustakaan');
+        const modal = document.getElementById('libraryLoginModal');
+        const closeBtn = document.getElementById('libraryModalClose');
+        const form = document.getElementById('libraryLoginForm');
+        const errorMsg = document.getElementById('libraryLoginError');
+        const userInput = document.getElementById('libUsername');
+        const passInput = document.getElementById('libPassword');
+
+        function openModal() {
+          modal.classList.add('active');
+          setTimeout(function () { if (userInput) userInput.focus(); }, 50);
+        }
+        function closeModal() {
+          modal.classList.remove('active');
+          form.reset();
+          errorMsg.classList.remove('show');
+        }
+
+        if (btn) btn.addEventListener('click', openModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (modal) {
+          modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeModal();
+          });
+        }
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && modal && modal.classList.contains('active')) closeModal();
+        });
+
+        if (form) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const u = userInput.value.trim();
+            const p = passInput.value;
+            if (u === ADMIN_USERNAME && p === ADMIN_PASSWORD) {
+              window.location.href = 'perpustakaan.html';
+            } else {
+              errorMsg.classList.add('show');
+            }
+          });
+        }
+      })();
