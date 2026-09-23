@@ -116,8 +116,9 @@ window.dataSdk = {
       if (result.isOk) {
         let formattedData = result.data.map(item => keBahasaSistem(item));
         formattedData = formattedData.map(item => {
-          if (item.copies) item.copies = parseInt(item.copies);
-          if (item.available) item.available = parseInt(item.available);
+          if (item.copies) item.copies = parseInt(item.copies) || 1;
+          // Harus dipisah agar nilai 0 (jika buku habis) tidak tergantikan oleh operator OR (||)
+          if (item.available !== undefined && item.available !== null) item.available = parseInt(item.available) || 0;
           if (item.fine) item.fine = parseInt(item.fine);
           return item;
         });
@@ -148,11 +149,14 @@ window.dataSdk = {
     await delay(1000);
 
     // 3. Update UI setelah 1 detik
+    // Pastikan mengubah tipe data ke Integer sebelum di-push ke allData
+    if (data.type === 'book') {
+      data.copies = parseInt(data.copies) || 1;
+      data.available = parseInt(data.available) || 1; 
+    }
+    
     allData.push(data);
-    this.handler.onDataChanged(allData);
-
-    return { isOk: true };
-  },
+    this.handler.onDataChanged(allData);  },
 
   async update(data) {
     const dataIndo = keBahasaIndonesia(data);
