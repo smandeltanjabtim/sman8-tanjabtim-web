@@ -289,16 +289,22 @@ function navigateTo(page) {
 
 // ─── Dashboard ────────────────────────────────────────
 function updateDashboard() {
-  const totalCopies    = books.reduce((sum, b) => sum + (b.copies || 0), 0);
+  const totalCopies    = books.reduce((sum, b) => sum + (parseInt(b.copies) || 0), 0);
   const activeBorrows  = borrows.filter(b => b.status === 'borrowed');
   const totalBorrowed  = activeBorrows.length;
-  const totalAvailable = books.reduce((sum, b) => sum + (b.available || 0), 0);
+  
+  // PERBAIKAN: Jika b.available kosong/undefined, otomatis ambil dari b.copies
+  const totalAvailable = books.reduce((sum, b) => {
+    let avail = b.available !== undefined && b.available !== null ? parseInt(b.available) : parseInt(b.copies) || 0;
+    return sum + avail;
+  }, 0);
 
   document.getElementById('stat-total-books').textContent = totalCopies;
   document.getElementById('stat-borrowed').textContent    = totalBorrowed;
   document.getElementById('stat-available').textContent   = totalAvailable;
   document.getElementById('stat-members').textContent     = members.length;
-
+  
+  // ... (lanjutan kode di bawahnya biarkan tetap sama)
   // Statistik bulanan
   const now       = new Date();
   const thisMonth = now.getMonth();
