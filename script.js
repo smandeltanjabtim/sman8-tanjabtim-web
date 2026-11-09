@@ -242,3 +242,36 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
       })();
+
+      // Modal Pilihan Aplikasi (Compresser & Upscaller)
+      (function () {
+        const btn = document.getElementById('btnAplikasi');
+        const modal = document.getElementById('aplikasiModal');
+        const closeBtn = document.getElementById('aplikasiModalClose');
+        const optionCards = modal ? modal.querySelectorAll('.aplikasi-option-card') : [];
+
+        function openModal() {
+          if (modal) modal.classList.add('active');
+        }
+        function closeModal() {
+          if (modal) modal.classList.remove('active');
+        }
+
+        if (btn) btn.addEventListener('click', openModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (modal) {
+          modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeModal();
+          });
+        }
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && modal && modal.classList.contains('active')) closeModal();
+        });
+
+        // Tutup modal ketika salah satu pilihan aplikasi diklik
+        optionCards.forEach(function (card) {
+          card.addEventListener('click', function () {
+            closeModal();
+          });
+        });
+      })();

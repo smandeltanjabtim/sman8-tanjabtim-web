@@ -52,9 +52,9 @@
                     Sekolah Menengah Atas Negeri yang berfokus pada prestasi akademik, pembentukan karakter luhur, dan penguasaan teknologi untuk masa depan gemilang.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#about" class="btn btn-primary">
-                        <i class="fas fa-compass"></i> Pelajari Lebih Lanjut
-                    </a>
+                    <button type="button" id="btnAplikasi" class="btn btn-primary">
+                        <i class="fas fa-th"></i> Aplikasi
+                    </button>
                     <a href="pengumuman.html" class="btn btn-accent">
                         <i class="fas fa-bullhorn"></i> Cek Pengumuman
                     </a>
@@ -300,6 +300,48 @@
                 <p id="libraryLoginError" class="library-error-msg">Username atau password salah.</p>
                 <button type="submit" class="library-modal-submit">Masuk</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal Pilihan Aplikasi -->
+    <div id="aplikasiModal" class="aplikasi-modal-overlay">
+        <div class="aplikasi-modal-box">
+            <button type="button" class="aplikasi-modal-close" id="aplikasiModalClose" aria-label="Tutup">&times;</button>
+            <div class="aplikasi-modal-header">
+                <div class="aplikasi-modal-icon">
+                    <i class="fas fa-th"></i>
+                </div>
+                <div>
+                    <h3>Pilihan Aplikasi</h3>
+                    <p class="aplikasi-modal-desc">Silakan pilih aplikasi yang ingin Anda buka:</p>
+                </div>
+            </div>
+            <div class="aplikasi-options">
+                <a href="https://mahdanitheo1.github.io/kompres_aio/" target="_blank" rel="noopener noreferrer" class="aplikasi-option-card">
+                    <div class="aplikasi-card-icon compresser-icon">
+                        <i class="fas fa-file-zipper"></i>
+                    </div>
+                    <div class="aplikasi-card-info">
+                        <h4>Compresser</h4>
+                        <p>Kompres file & dokumen dengan mudah</p>
+                    </div>
+                    <div class="aplikasi-card-arrow">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </div>
+                </a>
+                <a href="https://mahdanitheo1.github.io/upscaling/" target="_blank" rel="noopener noreferrer" class="aplikasi-option-card">
+                    <div class="aplikasi-card-icon upscaller-icon">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div class="aplikasi-card-info">
+                        <h4>Upscaller</h4>
+                        <p>Tingkatkan resolusi & kualitas gambar</p>
+                    </div>
+                    <div class="aplikasi-card-arrow">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 
